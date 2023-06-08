@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
   import type { turnComplementType, turnType } from '../types/Tictactoe';
   import { isNumber } from '../utils';
   import Tile from './Tile.svelte';
@@ -12,15 +11,19 @@
   // write logic
   const tiles: (number | turnType)[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   let turn: turnType = 'x';
+  let winner: turnType | null = null;
+  let winningPositions: number[] = [];
+  let isDrawn: boolean = false;
 
   function handleClick(value: turnType | number): void {
-    //write code here
     if (!isNumber(value)) return;
 
     if (typeof value === 'number')  {
       tiles[value] = turn;
       turn = turnComplement[turn];
     }
+
+    checkGameState();
   }
 
   function checkGameState(): void {
@@ -32,30 +35,32 @@
     ];
 
     // Check if any winning combination exists
-    const isWin = winningCombinations.some(combination => {
+    const winningCombination = winningCombinations.find(combination => {
       const [a, b, c] = combination;
       const tilesValues = [tiles[a], tiles[b], tiles[c]];
       return tilesValues.every(value => value === turn);
     });
 
-    // Check if the game is drawn (all tiles are filled)
-    const isDraw = tiles.every(value => !isNumber(value));
-
-    if (isWin) {
-      console.log(`${turn} has won`);
-    } else if (isDraw) {
-      console.log("The game is drawn!");
+    if (winningCombination) {
+      winner = turn;
+      winningPositions = winningCombination;
+      isDrawn = false;
+    } else if (tiles.every(value => !isNumber(value))) {
+      // All tiles are filled and no winner
+      winner = null;
+      winningPositions = [];
+      isDrawn = true;
+    } else {
+      winner = null;
+      winningPositions = [];
+      isDrawn = false;
     }
   }
-
-  afterUpdate(() => {
-    checkGameState();
-  })
 </script>
 
 <div class="game-container">
-  {#each tiles as tileValue}
-    <Tile {tileValue} {handleClick} />
+  {#each tiles as tileValue, index}
+    <Tile {tileValue} {handleClick} isWinner={winningPositions.includes(index)} />
   {/each}
 </div>
 
