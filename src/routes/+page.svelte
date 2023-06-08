@@ -1,2 +1,19 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+  import Tictactoe from "../components/Tictactoe.svelte";
+  //write logic here
+</script>
+
+<style>
+/* Write styles here */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
+
+
+<div class="container">
+  <h1>TicTacToe</h1>
+  <Tictactoe />
+</div>
