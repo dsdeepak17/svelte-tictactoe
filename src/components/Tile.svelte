@@ -4,7 +4,7 @@
 	// Write logic
 	export let tileValue: number | turnType = 0;
 	export let handleClick: (value: number | turnType) => void;
-  export let isWinner=false;
+	export let isWinner = false;
 </script>
 
 <!-- 
@@ -14,7 +14,11 @@
   
  -->
 
-<button on:click={() => handleClick(tileValue)} disabled={!isNumber(tileValue)} class={isWinner ? 'winner-position': ''}>
+<button
+	on:click={() => handleClick(tileValue)}
+	disabled={!isNumber(tileValue)}
+	class={isWinner ? 'winner-position' : ''}
+>
 	{isNumber(tileValue) ? '' : tileValue}
 </button>
 
@@ -41,9 +45,9 @@
 			transform: scale(0.9);
 		}
 
-    &.winner-position {
-      background-color: #212738;
-      color: #ffeecf;
-    }
+		&.winner-position {
+			background-color: #212738;
+			color: #ffeecf;
+		}
 	}
 </style>
