@@ -68,7 +68,12 @@
 
 <div class="game-container">
 	{#each tiles as tileValue, index}
-		<Tile {tileValue} {handleClick} isWinner={winningPositions.includes(index)} />
+		<Tile
+			{tileValue}
+			{handleClick}
+			isWinner={winningPositions.includes(index)}
+			disabled={!isNumber(tileValue) || Boolean(winner)}
+		/>
 	{/each}
 </div>
 

@@ -5,18 +5,19 @@
 	export let tileValue: number | turnType = 0;
 	export let handleClick: (value: number | turnType) => void;
 	export let isWinner = false;
+	export let disabled = false;
 </script>
 
 <!-- 
   @component
   
-  <Tile {tileValue} {handleClick} {isWinner} />
+  <Tile {tileValue} {handleClick} {isWinner} {disabled} />
   
  -->
 
 <button
 	on:click={() => handleClick(tileValue)}
-	disabled={!isNumber(tileValue)}
+	disabled={disabled}
 	class={isWinner ? 'winner-position' : ''}
 >
 	{isNumber(tileValue) ? '' : tileValue}
